@@ -29,6 +29,14 @@ async function getRestaurants(req, resp) {
   }
 }
 
+//trae restos por nombre//
+
+async function getRestosByName(req, resp) {
+  const { nombre } = req.params;
+  const restaurant = await restaurantModel.find({ nombre });
+  resp.json(restaurant);
+}
+
 //borra restaurants//
 
 async function deleteRestaurants(req, resp) {
@@ -37,4 +45,9 @@ async function deleteRestaurants(req, resp) {
   resp.json({ message: "datos eliminados" });
 }
 
-module.exports = { createRestaurant, getRestaurants, deleteRestaurants };
+module.exports = {
+  createRestaurant,
+  getRestaurants,
+  deleteRestaurants,
+  getRestosByName,
+};

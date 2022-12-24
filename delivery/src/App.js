@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import { Signup } from "./components/Signup";
 import Restaurants from "./components/Restaurants";
-import McHome from "./components/McHome";
+import RestaurantsList from "./components/RestaurantsList";
 
 function App() {
   const user = true;
@@ -24,8 +24,8 @@ function App() {
             <Route path="/" element={<MainContainer />} />
             <Route path="/createitem" element={<CreateContainer />} />
             <Route path="/signup" element={<Signup />} />
+            <Route path="/restaurants/:nombre" element={<RestaurantsList />} />
             <Route path="/restaurants" element={<Restaurants />} />
-            <Route path="/mcdonalds" element={<McHome />} />
           </Routes>
         </main>
         <Footer />
