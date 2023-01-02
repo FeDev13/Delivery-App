@@ -69,7 +69,7 @@ export default function Navbar({ user }) {
           )}
         </div>
 
-        {/* mobile version*/}
+        {/* mobile */}
         <div className="flex items-center justify-between md:hidden w-full h-full ">
           <NavLink to="/home" className="flex items-center gap-2">
             <img src={Logo} className="w-8  object-cover" alt="logo" />

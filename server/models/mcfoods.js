@@ -1,14 +1,13 @@
 const mongoose = require("mongoose");
 
-const foodSchema = new mongoose.Schema({
+const mcfoodSchema = new mongoose.Schema({
   nombre: { type: String, required: true },
   descripcion: { type: String, required: true },
   categoria: { type: String, requied: true },
   precio: { type: Number, required: true },
   imagen: { type: String, required: true },
-  agregado: { type: Boolean, default: false },
 });
 
-const Food = mongoose.model("food", foodSchema);
+const mcFood = mongoose.model("mcfood", mcfoodSchema);
 
-module.exports = Food;
+module.exports = mcFood;

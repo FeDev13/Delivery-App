@@ -10,7 +10,7 @@ import Footer from "./components/Footer";
 import Login from "./components/Login";
 import { Signup } from "./components/Signup";
 import Restaurants from "./components/Restaurants";
-import RestaurantsList from "./components/RestaurantsList";
+import McDonalds from "./components/McDonalds";
 
 function App() {
   const user = true;
@@ -24,7 +24,7 @@ function App() {
             <Route path="/" element={<MainContainer />} />
             <Route path="/createitem" element={<CreateContainer />} />
             <Route path="/signup" element={<Signup />} />
-            <Route path="/restaurants/:nombre" element={<RestaurantsList />} />
+            <Route path="/restaurants/:nombre" element={<McDonalds />} />
             <Route path="/restaurants" element={<Restaurants />} />
           </Routes>
         </main>

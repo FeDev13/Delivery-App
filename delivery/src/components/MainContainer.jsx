@@ -1,4 +1,5 @@
 import React from "react";
+/* import { CartContainer } from "./CartContainer"; */
 import Home from "./Home";
 import Slider from "./Slider";
 
@@ -13,6 +14,7 @@ const MainContainer = () => {
           <Slider />
         </div>
       </section>
+      {/*  <CartContainer /> */}
     </div>
   );
 };

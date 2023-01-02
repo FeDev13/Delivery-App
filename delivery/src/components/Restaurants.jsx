@@ -45,6 +45,7 @@ const Restaurants = () => {
           placeholder="buscar..."
         />
         {data.map((item, index) => {
+          //trae restaurants, los mapea y por cada uno usa la variable nombre (${}) del hook para que cada link navegue hacia la ruta que le corresponde, en este caso la ruta se va a ver con la propiedad nombre del objeto item que viene del mapeo
           return (
             <NavLink to={`/restaurants/${item.nombre}`}>
               <div
