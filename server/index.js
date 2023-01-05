@@ -1,6 +1,7 @@
 const express = require("express");
 const mongoose = require("mongoose");
 const cookieSession = require("cookie-session");
+const cookieParser = require("cookie-parser");
 const passportSetup = require("./passport");
 const cors = require("cors");
 const port = process.env.PORT || 3002;
@@ -12,6 +13,7 @@ const mcRoutes = require("./routes/mcdonaldsroutes");
 const bkRoutes = require("./routes/bkroutes");
 const restoRoutes = require("./routes/restaurants");
 const authRoutes = require("./routes/auth");
+const authRuts = require("./routes/authRoutes");
 const passport = require("passport");
 
 const app = express();
@@ -26,10 +28,18 @@ app.use(
 );
 app.use(passport.initialize());
 app.use(passport.session());
-app.use(cors());
+app.use(
+  cors({
+    origin: ["http://localhost:3000"],
+    methods: ["GET", "POST"],
+    credentials: true,
+  })
+);
 app.use(express.json());
+app.use(cookieParser());
 app.use(express.urlencoded({ extended: true }));
 app.use("/", cartRoutes);
+app.use("/", authRuts);
 app.use("/foods", foodRoutes);
 app.use("/restaurants/:nombre", mcRoutes);
 app.use("/restaurants/:nombre", bkRoutes);

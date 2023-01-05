@@ -11,14 +11,14 @@ import Login from "./components/Login";
 import { Signup } from "./components/Signup";
 import Restaurants from "./components/Restaurants";
 import McDonalds from "./components/McDonalds";
+import "react-toastify/dist/ReactToastify.css";
 
 function App() {
-  const user = true;
   return (
     <CartProvider>
       <AnimatePresence>
         <div className="w-screen h-auto flex flex-col bg-primary">
-          <Navbar user={user} />
+          <Navbar />
           <main className="mt-14 md:mt-20 w-full">
             <Routes>
               <Route path="/login" element={<Login />} />

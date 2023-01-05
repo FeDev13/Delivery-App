@@ -1,9 +1,51 @@
 import React from "react";
+import { useState, useEffect } from "react";
+import axios from "axios";
+import { ToastContainer, toast } from "react-toastify";
+import { useCookies } from "react-cookie";
+import { useNavigate } from "react-router-dom";
 
 export const Signup = () => {
   const googleAuth = () => {
     window.open("http://localhost:3002/auth/google/callback", "_self");
   };
+  const [values, setValues] = useState({ email: "", password: "" });
+  const [cookies] = useCookies(["cookie-name"]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (cookies.jwt) {
+      navigate("/");
+    }
+  }, [cookies, navigate]);
+  const generateError = (error) =>
+    toast.error(error, {
+      position: "bottom-right",
+    });
+
+  const handleSubmit = async (e) => {
+    e.preventDefault();
+    try {
+      const { data } = await axios.post(
+        "http://localhost:3002/register",
+        {
+          ...values,
+        },
+        { withCredentials: true }
+      );
+      if (data) {
+        if (data.errors) {
+          const { email, password } = data.errors;
+          if (email) generateError(email);
+          else if (password) generateError(password);
+        } else {
+          navigate("/");
+        }
+      }
+    } catch (ex) {
+      console.log(ex);
+    }
+  };
+
   return (
     <>
       <div className="max-w-screen-xl m-0 sm:m-20 bg-white  flex justify-center flex-1 p-20">
@@ -51,39 +93,48 @@ export const Signup = () => {
                   <span className="ml-4">Registrate con GitHub</span>
                 </button>
               </div>
-
               <div className="my-12 border-b text-center">
                 <div className="leading-none px-2 inline-block text-sm text-gray-600 tracking-wide font-medium bg-white transform translate-y-1/2">
                   O registrate con tu email
                 </div>
               </div>
-
               <div className="mx-auto max-w-xs">
-                <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
-                  type="email"
-                  placeholder="Email"
-                />
-                <input
-                  className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
-                  type="password"
-                  placeholder="Password"
-                />
-                <button className="mt-5 tracking-wide font-semibold bg-white text-black w-full py-4 rounded-lg hover:bg-red-400 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
-                  <svg
-                    className="w-6 h-6 -ml-2"
-                    fill="none"
-                    stroke="currentColor"
-                    strokeWidth="2"
-                    strokeLinecap="round"
-                    strokeLinejoin="round"
-                  >
-                    <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
-                    <circle cx="8.5" cy="7" r="4" />
-                    <path d="M20 8v6M23 11h-6" />
-                  </svg>
-                  <span className="ml-3">Registrate</span>
-                </button>
+                <form onSubmit={handleSubmit}>
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white"
+                    type="email"
+                    placeholder="Email"
+                    name="email"
+                    onChange={(e) =>
+                      setValues({ ...values, [e.target.name]: e.target.value })
+                    }
+                  />
+                  <input
+                    className="w-full px-8 py-4 rounded-lg font-medium bg-gray-100 border border-gray-200 placeholder-gray-500 text-sm focus:outline-none focus:border-gray-400 focus:bg-white mt-5"
+                    type="password"
+                    placeholder="Password"
+                    name="password"
+                    onChange={(e) =>
+                      setValues({ ...values, [e.target.name]: e.target.value })
+                    }
+                  />
+                  <button className="mt-5 tracking-wide font-semibold bg-white text-black w-full py-4 rounded-lg hover:bg-red-400 transition-all duration-300 ease-in-out flex items-center justify-center focus:shadow-outline focus:outline-none">
+                    <svg
+                      className="w-6 h-6 -ml-2"
+                      fill="none"
+                      stroke="currentColor"
+                      strokeWidth="2"
+                      strokeLinecap="round"
+                      strokeLinejoin="round"
+                    >
+                      <path d="M16 21v-2a4 4 0 00-4-4H5a4 4 0 00-4 4v2" />
+                      <circle cx="8.5" cy="7" r="4" />
+                      <path d="M20 8v6M23 11h-6" />
+                    </svg>
+                    <span className="ml-3">Registrate</span>
+                  </button>
+                </form>
+
                 <p className="mt-6 text-xs text-gray-600 text-center">
                   <a
                     href="r"
@@ -92,7 +143,7 @@ export const Signup = () => {
                     Terminos y condiciones
                   </a>
                 </p>
-              </div>
+              </div>{" "}
             </div>
           </div>
         </div>
@@ -106,6 +157,7 @@ export const Signup = () => {
           ></div>
         </div>
       </div>
+      <ToastContainer />
     </>
   );
 };

@@ -4,12 +4,22 @@ import { ChevronDownIcon } from "@heroicons/react/20/solid";
 import ProfilePic from "../assets/avatar.png";
 import { motion } from "framer-motion";
 import { NavLink } from "react-router-dom";
+import { useNavigate } from "react-router-dom";
+import { useCookies } from "react-cookie";
 
 function classNames(...classes) {
   return classes.filter(Boolean).join(" ");
 }
 
 export default function Dropdown() {
+  const navigate = useNavigate();
+  const [cookies, setCookie, removeCookie] = useCookies([]);
+
+  const logOut = () => {
+    removeCookie("jwt");
+    navigate("/login");
+  };
+
   return (
     <Menu as="div" className="relative inline-block text-left">
       <div>
@@ -50,37 +60,19 @@ export default function Dropdown() {
             </Menu.Item>
             <Menu.Item>
               {({ active }) => (
-                <NavLink to="/login">
-                  {" "}
-                  <a
-                    href="r"
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
-                    )}
-                  >
-                    Logout
-                  </a>
-                </NavLink>
+                <button
+                  onClick={logOut}
+                  className={classNames(
+                    active ? "bg-gray-100 text-gray-900" : "text-gray-700",
+                    "block px-4 py-2 text-sm"
+                  )}
+                >
+                  Logout
+                </button>
               )}
             </Menu.Item>
           </div>
           <div className="py-1">
-            <Menu.Item>
-              {({ active }) => (
-                <NavLink to="/signup">
-                  <a
-                    href="r"
-                    className={classNames(
-                      active ? "bg-gray-100 text-gray-900" : "text-gray-700",
-                      "block px-4 py-2 text-sm"
-                    )}
-                  >
-                    Mis pedidos
-                  </a>
-                </NavLink>
-              )}
-            </Menu.Item>
             <Menu.Item>
               {({ active }) => (
                 <a
